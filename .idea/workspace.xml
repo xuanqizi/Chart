@@ -15,7 +15,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1r9xx0rXOmAj5BHAAv2mTMSs4EA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -23,6 +27,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -42,9 +47,9 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state x="490" y="153" key="#com.intellij.ide.util.MemberChooser/0.0.1368.872@0.0.1368.872" timestamp="1618402421582" />
-    <state x="465" y="178" key="FileChooserDialogImpl" timestamp="1618402672256">
+    <state x="465" y="178" key="FileChooserDialogImpl" timestamp="1618403198692">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state x="465" y="178" key="FileChooserDialogImpl/0.0.1368.872@0.0.1368.872" timestamp="1618402672256" />
+    <state x="465" y="178" key="FileChooserDialogImpl/0.0.1368.872@0.0.1368.872" timestamp="1618403198692" />
   </component>
 </project>
