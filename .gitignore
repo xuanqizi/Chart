@@ -1,1 +1,3 @@
-.idea/vcs.xml
+log/
+.idea/
+/target/
