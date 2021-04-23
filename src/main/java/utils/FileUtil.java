@@ -74,7 +74,7 @@ public class FileUtil {
             while (len >= 0) {
                 len = inputStream.read(buffer);     // 如果数据读取结束，read函数会返回-1
                 if (len == -1) { break; }
-                short[] shortArray = readBufferAsShort(buffer, len);
+                short[] shortArray = readBufferAsShort(buffer, len, order);
                 for (short num: shortArray) {
                     resultList.add(num);
                 }
@@ -96,8 +96,11 @@ public class FileUtil {
     /**
      * 将buffer中的内容以Short形式读取到数组当中
      * @param buffer 存储二进制数的buffer
+     * @param len buffer当中存储的byte的数量
+     * @param order ByteOrder类，标识顺序为大端或小端
+     * @return
      */
-    public static short[] readBufferAsShort(byte[] buffer, int len) {
+    public static short[] readBufferAsShort(byte[] buffer, int len, ByteOrder order) {
         if (len < 0) {
             return new short[0];
         }
