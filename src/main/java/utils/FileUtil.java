@@ -3,15 +3,13 @@ package utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * 用于存储文件操作方法的工具类
@@ -25,22 +23,39 @@ public class FileUtil {
 
     private static Properties properties;
 
-    private static final String propertyFilePath = "chart.properties";  // 配置文件路径
+    private static final String PROPERTY_FILE_PATH = "chart.properties";  // 配置文件路径
 
     private static boolean failedToLoadProperty = false;        // 记录是否无法读取配置文件
 
+    private static ByteOrder order;     // 设置顺序为大端或小端
 
+    private static final String ENDIAN_PROPERTY_KEY = "chart.endian";     // 配置文件中设置大端或小端的key
+
+    // 配置文件当中大端和小端对应的值
+    private static final String BIG_ENDIAN_PROPERTY_VALUE = "BIG_ENDIAN";
+    private static final String LITTLE_ENDIAN_PROPERTY_VALUE = "LITTLE_ENDIAN";
 
     /**
      * 通过静态代码块，在类加载时读取配置文件
      */
     static {
-        properties = new Properties();
+        String endian = null;
         try {
-            properties.load(new FileInputStream(propertyFilePath));
+            InputStream in = FileUtil.class.getClassLoader().getResourceAsStream(PROPERTY_FILE_PATH);
+            properties = new Properties();
+            properties.load(in);
+            endian = properties.getProperty(ENDIAN_PROPERTY_KEY);
         } catch (Exception e) {
-            logger.error("Failed to load property file.");
+            logger.error("Failed to load property file. {}", e.getMessage());
             failedToLoadProperty = true;
+        }
+        if (endian != null && endian.equals(BIG_ENDIAN_PROPERTY_VALUE)) {
+            order = ByteOrder.BIG_ENDIAN;
+        } else if (endian != null && endian.equals(LITTLE_ENDIAN_PROPERTY_VALUE)) {
+            order = ByteOrder.LITTLE_ENDIAN;
+        } else {
+            failedToLoadProperty = true;
+            order = ByteOrder.BIG_ENDIAN;        // 默认为大端
         }
     }
 
@@ -88,7 +103,7 @@ public class FileUtil {
         }
         int shortBufferLength = (len % 2 == 1) ? len / 2 + 1: len / 2;
         short[] shortBuffer = new short[shortBufferLength];
-        ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shortBuffer);
+        ByteBuffer.wrap(buffer).order(order).asShortBuffer().get(shortBuffer);
         return shortBuffer;
     }
 }
