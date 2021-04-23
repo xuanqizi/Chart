@@ -3,6 +3,7 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
@@ -50,7 +51,7 @@ public class MainController implements Initializable {
     public void onOpenMenuClicked(ActionEvent event) {
         File file = chooseFile();
         List<Short> res = FileUtil.readFile(file);
-        for(short shortNum: res) {
+        for (short shortNum: res) {
             System.out.println(shortNum);
         }
     }
@@ -63,7 +64,8 @@ public class MainController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(fileChooserTitle);
         if (stage == null) {
-            stage = (Stage) root.getScene().getWindow();
+            Scene scene = root.getScene();
+            stage = (Stage) scene.getWindow();
         }
         return fileChooser.showOpenDialog(stage);
     }
