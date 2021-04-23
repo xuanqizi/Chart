@@ -10,9 +10,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.FileUtil;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -46,9 +48,17 @@ public class MainController implements Initializable {
      */
     @FXML
     public void onOpenMenuClicked(ActionEvent event) {
-        logger.info("clicked!");
+        File file = chooseFile();
+        List<Short> res = FileUtil.readFile(file);
+        for(short shortNum: res) {
+            System.out.println(shortNum);
+        }
     }
 
+    /**
+     * 打开文件选择器并选择文件
+     * @return 返回所选文件的File对象
+     */
     private File chooseFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(fileChooserTitle);
