@@ -1,5 +1,6 @@
 package utils;
 
+import constants.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +24,6 @@ public class FileUtil {
 
     private static Properties properties;
 
-    private static final String PROPERTY_FILE_PATH = "chart.properties";  // 配置文件路径
-
     private static boolean failedToLoadProperty = false;        // 记录是否无法读取配置文件
 
     private static ByteOrder order;     // 设置顺序为大端或小端
@@ -41,7 +40,7 @@ public class FileUtil {
     static {
         String endian = null;
         try {
-            InputStream in = FileUtil.class.getClassLoader().getResourceAsStream(PROPERTY_FILE_PATH);
+            InputStream in = FileUtil.class.getClassLoader().getResourceAsStream(Constants.PROPERTY_FILE_PATH);
             properties = new Properties();
             properties.load(in);
             endian = properties.getProperty(ENDIAN_PROPERTY_KEY);

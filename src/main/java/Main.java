@@ -18,6 +18,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        setUserAgentStylesheet(STYLESHEET_CASPIAN);
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxmlFileName));
             Scene scene = new Scene(root, appWidth, appHeight);
