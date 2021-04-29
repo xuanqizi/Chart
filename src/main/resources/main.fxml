@@ -8,13 +8,13 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="root" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<AnchorPane fx:id="root" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
       <MenuBar prefHeight="32.0" prefWidth="1920.0">
         <menus>
-          <Menu fx:id="fileMenu" mnemonicParsing="false" text="文件">
+          <Menu mnemonicParsing="false" text="文件">
             <items>
-              <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#onOpenMenuClicked" text="打开" />
+              <MenuItem mnemonicParsing="false" onAction="#onOpenMenuClicked" text="打开" />
             </items>
           </Menu>
         </menus>
@@ -33,7 +33,14 @@
       </AnchorPane>
       <ScrollPane layoutX="200.0" layoutY="32.0" prefHeight="970.0" prefWidth="1720.0">
          <content>
-            <AnchorPane fx:id="chartAnchorPane" prefHeight="970.0" prefWidth="1720.0" />
+             <AnchorPane fx:id="chartAnchorPane" prefHeight="970.0" prefWidth="1720.0">
+               <children>
+                  <ScrollPane prefHeight="408.0" prefWidth="1220.0">
+                    <content>
+                      <AnchorPane fx:id="chartContainer" minHeight="0.0" minWidth="0.0" prefHeight="407.0" prefWidth="1150.0" />
+                    </content>
+                  </ScrollPane>
+               </children></AnchorPane>
          </content>
       </ScrollPane>
    </children>

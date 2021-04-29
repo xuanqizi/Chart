@@ -31,7 +31,7 @@ public class AisleUtil {
      */
     public static List<ScrollPane> createAisles(AnchorPane mainContainer,
                                                 int number) {
-        List<ScrollPane> containers = new ArrayList<>();
+        List<ScrollPane> containers = new ArrayList<ScrollPane>();
         double aisleHeight = MAIN_CONTAINER_HEIGHT / number;
         for (int i = 0; i < number; i++) {
             // 新建一个ScrollPane并加入到AnchorPane当中

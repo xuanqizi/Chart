@@ -8,9 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.chart.Chart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.gillius.jfxutils.chart.ChartZoomManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.AisleUtil;
@@ -34,20 +36,16 @@ public class MainController implements Initializable {
     private AnchorPane root;
 
     @FXML
-    private Menu fileMenu;     // 菜单的"文件"按钮
-
-    @FXML
-    private MenuItem openMenuItem;     // 菜单的"文件-打开"按钮
-
-    @FXML
     private TreeView<String> leftTreeView;      // 左侧的树状菜单列表
 
     @FXML
     private AnchorPane chartAnchorPane;         // 用于容纳图表的AnchorPane
 
+    @FXML
+    private AnchorPane chartContainer;          // 用于存放图表的
+
     private Stage stage;       // 用于存储Stage
     private int chartNumber;    // 画面当中显示的图表数量
-    List<ScrollPane> containers;       // 用于存储各通道的ScrollPane
 
     private static final String fileChooserTitle = "请选择数据文件";      // 文件选择器的标题
     private static final String AISLE_PROPERTY_KEY = "chart.aisle";     // 通道数量的配置key
@@ -102,9 +100,8 @@ public class MainController implements Initializable {
      * 向通道当中添加图表
      */
     private void addChart(List<Short> list, int type) {
-        Chart chart = ChartUtil.createChart(list, type);
-        // AnchorPane anchorPane = AisleUtil.putChartIntoAnchorPane(chart);
-        chartAnchorPane.getChildren().add(chart);
+        chartContainer.getChildren().clear();
+        ChartUtil.createChartWithZooming(list, type, chartContainer);
     }
 
     /**
