@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.Chart;
 import javafx.scene.control.*;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -19,6 +20,7 @@ import utils.AisleUtil;
 import utils.ChartUtil;
 import utils.FileUtil;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,36 +41,35 @@ public class MainController implements Initializable {
     private TreeView<String> leftTreeView;      // 左侧的树状菜单列表
 
     @FXML
+    private ScrollPane outSideScrollPane;       // 最外层的ScrollPane
+
+    @FXML
     private AnchorPane chartAnchorPane;         // 用于容纳图表的AnchorPane
 
     @FXML
-    private AnchorPane chartContainer;          // 用于存放图表的
+    private AnchorPane chartContainer;          // 用于存放图表的AnchorPane
+
+    @FXML
+    private ScrollPane chartScrollPane;         // 存放作为图表容器的AnchorPane的ScrollPane
 
     private Stage stage;       // 用于存储Stage
-    private int chartNumber;    // 画面当中显示的图表数量
 
     private static final String fileChooserTitle = "请选择数据文件";      // 文件选择器的标题
-    private static final String AISLE_PROPERTY_KEY = "chart.aisle";     // 通道数量的配置key
-    private static final int DEFAULT_CHART_NUMBER = 2;      // 默认显示的图表数量
     private static Logger logger = LoggerFactory.getLogger(MainController.class);
 
     /**
      * 初始化Controller
      */
     public void initialize(URL location, ResourceBundle resources) {
-        Properties properties = new Properties();
-        try {
-            InputStream in = FileUtil.class.getClassLoader().getResourceAsStream(Constants.PROPERTY_FILE_PATH);
-            properties.load(in);
-            chartNumber = Integer.parseInt(properties.getProperty(AISLE_PROPERTY_KEY));
-        } catch (IOException e) {
-            chartNumber = DEFAULT_CHART_NUMBER;
-            logger.error("Failed to load property file. {}", e.getMessage());
-        } catch (NumberFormatException e) {
-            chartNumber = DEFAULT_CHART_NUMBER;
-            logger.error("Failed to load aisle number because NumberFormatError. {}", e.getMessage());
-        }
-        initAisle();
+        GraphicsDevice graphicsDevice =
+                GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        double width = graphicsDevice.getDisplayMode().getWidth() - 200.0;
+        outSideScrollPane.setPrefWidth(width);
+        chartAnchorPane.setPrefWidth(width);
+        chartScrollPane.setPrefWidth(width);
+        chartContainer.setPrefWidth(width);
+        outSideScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        outSideScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     }
 
     /**
@@ -102,12 +103,5 @@ public class MainController implements Initializable {
     private void addChart(List<Short> list, int type) {
         chartContainer.getChildren().clear();
         ChartUtil.createChartWithZooming(list, type, chartContainer);
-    }
-
-    /**
-     * 初始化加载通道
-     */
-    private void initAisle() {
-
     }
 }
