@@ -31,9 +31,9 @@
              </TreeView>
          </children>
       </AnchorPane>
-      <ScrollPane layoutX="200.0" layoutY="32.0" prefHeight="983.0" prefWidth="1720.0">
+      <ScrollPane layoutX="200.0" layoutY="32.0" prefHeight="970.0" prefWidth="1720.0">
          <content>
-            <AnchorPane fx:id="chartAnchorPane" prefHeight="981.0" prefWidth="1716.0" />
+            <AnchorPane fx:id="chartAnchorPane" prefHeight="970.0" prefWidth="1720.0" />
          </content>
       </ScrollPane>
    </children>

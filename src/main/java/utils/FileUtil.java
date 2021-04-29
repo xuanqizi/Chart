@@ -78,15 +78,18 @@ public class FileUtil {
                     resultList.add(num);
                 }
             }
+            logger.info("File {} was read", file.getName());
         } catch (FileNotFoundException fileNotFoundException) {
             logger.error("File {} not found", fileNotFoundException);
         } catch (IOException e) {
             logger.error("Failed to read file {}", file.getName());
         } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                logger.error("Failed to close FileInputStream");
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    logger.error("Failed to close FileInputStream");
+                }
             }
         }
         return resultList;
@@ -97,7 +100,7 @@ public class FileUtil {
      * @param buffer 存储二进制数的buffer
      * @param len buffer当中存储的byte的数量
      * @param order ByteOrder类，标识顺序为大端或小端
-     * @return
+     * @return 返回读取的short数组
      */
     public static short[] readBufferAsShort(byte[] buffer, int len, ByteOrder order) {
         if (len < 0) {

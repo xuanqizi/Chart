@@ -18,7 +18,7 @@ public class ChartUtil {
      * 将从文件读取出的16位数字转换为图表
      * @param numbers 16位
      * @param type 要生成的图表类型
-     * @return
+     * @return 返回生成的图表
      */
     public static Chart createChart(List<Short> numbers, int type) {
         final NumberAxis xAxis = new NumberAxis();      // 用于存储x轴的数字
@@ -43,6 +43,7 @@ public class ChartUtil {
             series.getData().add(new XYChart.Data<Number, Number>(++currentX, num));
         }
         chart.getData().add(series);
+        chart.setPrefWidth(numbers.size() * 10);
         return chart;
     }
 }

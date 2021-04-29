@@ -6,15 +6,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.Chart;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.AisleUtil;
 import utils.ChartUtil;
 import utils.FileUtil;
 
@@ -48,6 +47,7 @@ public class MainController implements Initializable {
 
     private Stage stage;       // 用于存储Stage
     private int chartNumber;    // 画面当中显示的图表数量
+    List<ScrollPane> containers;       // 用于存储各通道的ScrollPane
 
     private static final String fileChooserTitle = "请选择数据文件";      // 文件选择器的标题
     private static final String AISLE_PROPERTY_KEY = "chart.aisle";     // 通道数量的配置key
@@ -70,7 +70,7 @@ public class MainController implements Initializable {
             chartNumber = DEFAULT_CHART_NUMBER;
             logger.error("Failed to load aisle number because NumberFormatError. {}", e.getMessage());
         }
-
+        initAisle();
     }
 
     /**
@@ -103,6 +103,14 @@ public class MainController implements Initializable {
      */
     private void addChart(List<Short> list, int type) {
         Chart chart = ChartUtil.createChart(list, type);
+        // AnchorPane anchorPane = AisleUtil.putChartIntoAnchorPane(chart);
         chartAnchorPane.getChildren().add(chart);
+    }
+
+    /**
+     * 初始化加载通道
+     */
+    private void initAisle() {
+
     }
 }
