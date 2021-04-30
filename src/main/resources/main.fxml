@@ -7,7 +7,6 @@
 <?import javafx.scene.control.TreeItem?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane fx:id="root" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
@@ -22,11 +21,11 @@
       </MenuBar>
       <AnchorPane layoutY="32.0" prefHeight="970.0" prefWidth="200.0">
          <children>
-             <TreeView fx:id="leftTreeView" prefHeight="983.0" prefWidth="200.0">
+             <TreeView fx:id="treeView" prefHeight="983.0" prefWidth="200.0">
                  <TreeItem expanded="true" value="操作">
                      <children>
-                         <TreeItem value="微分" />
-                         <TreeItem value="积分" />
+                         <TreeItem value="微分" fx:id="differential" />
+                         <TreeItem value="积分" fx:id="integral" />
                      </children>
                  </TreeItem>
              </TreeView>
@@ -38,13 +37,16 @@
                <children>
                   <ScrollPane fx:id="chartScrollPane" prefHeight="410.0" prefWidth="1720.0">
                     <content>
-                      <AnchorPane fx:id="chartContainer" minHeight="0.0" minWidth="0.0" prefHeight="410.0" prefWidth="1720.0">
-                           <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="30.0" layoutX="31.0" layoutY="354.0" stroke="BLACK" strokeType="INSIDE" width="85.0" />
-                           </children></AnchorPane>
+                      <AnchorPane fx:id="chartContainer" minHeight="0.0" minWidth="0.0" prefHeight="410.0" prefWidth="1720.0" />
                     </content>
                   </ScrollPane>
-               </children></AnchorPane>
+                  <ScrollPane fx:id="calculatedChartScrollBar" layoutY="410.0" prefHeight="541.0" prefWidth="1710.0">
+                    <content>
+                      <AnchorPane fx:id="calculatedChartContainer" minHeight="0.0" minWidth="0.0" prefHeight="539.0" prefWidth="1700.0" />
+                    </content>
+                  </ScrollPane>
+               </children>
+             </AnchorPane>
          </content>
       </ScrollPane>
    </children>
