@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TreeItem?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane fx:id="root" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
@@ -24,8 +25,8 @@
              <TreeView fx:id="treeView" prefHeight="983.0" prefWidth="200.0">
                  <TreeItem expanded="true" value="操作">
                      <children>
-                         <TreeItem value="微分" fx:id="differential" />
-                         <TreeItem value="积分" fx:id="integral" />
+                         <TreeItem fx:id="differential" value="微分" />
+                         <TreeItem fx:id="integral" value="积分" />
                      </children>
                  </TreeItem>
              </TreeView>

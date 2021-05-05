@@ -1,10 +1,12 @@
 package utils;
 
 import javafx.scene.chart.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import org.gillius.jfxutils.chart.ChartZoomManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
+import org.gillius.jfxutils.chart.XYChartInfo;
 
 import java.util.List;
 
@@ -53,6 +55,7 @@ public class ChartUtil {
                 new Rectangle(0, 0), chart);
         chartZoomManager.setZoomAnimated(true);     // 设置缩放动画
         chartZoomManager.setMouseWheelZoomAllowed(true);    // 允许通过鼠标滚轮进行缩放
+        addDoubleClickResetListener(chart);     // 添加双击监听器
         return chart;
     }
 
@@ -91,6 +94,7 @@ public class ChartUtil {
                 new Rectangle(0, 0), chart);
         chartZoomManager.setZoomAnimated(true);     // 设置缩放动画
         chartZoomManager.setMouseWheelZoomAllowed(true);    // 允许通过鼠标滚轮进行缩放
+        addDoubleClickResetListener(chart);
         return chart;
     }
 
@@ -117,5 +121,35 @@ public class ChartUtil {
             }
         }
         return chart;
+    }
+
+    /**
+     * 为图表添加监听双击的listener
+     * 并在监听到双击之后重置图表缩放
+     * @param chart 需添加listener的图表
+     */
+    private static void addDoubleClickResetListener(XYChart<?, ?> chart) {
+        chart.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() == 2) {
+                resetRange(chart, event);
+                event.consume();
+            }
+        });
+    }
+
+    /**
+     * 通过双击重置缩放范围
+     * 若用户双击x轴，则只重置x轴；若用户双击y轴，则只重置y轴
+     * 若用户双击其他区域，则重置整个图表
+     * @param chart 需要进行重置的图表
+     */
+    private static void resetRange(XYChart<?, ?> chart, MouseEvent event) {
+        XYChartInfo info = new XYChartInfo(chart);
+        if (!info.getXAxisArea().contains(event.getX(), event.getY())) {    // 若用户未点击x轴
+            chart.getYAxis().setAutoRanging(true);      // 重置y轴
+        }
+        if (!info.getYAxisArea().contains(event.getX(), event.getY())) {    // 若用户未点击y轴
+            chart.getXAxis().setAutoRanging(true);      // 重置x轴
+        }
     }
 }

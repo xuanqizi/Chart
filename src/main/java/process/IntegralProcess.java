@@ -11,7 +11,7 @@ import java.util.List;
 public class IntegralProcess implements Process {
 
     private static final int SUM_NUMBER = 100;
-    
+
     /**
      * 对数据的前一百个点求和（若不足100个则将前面的所有点求和）
      * @param list 输入数据
