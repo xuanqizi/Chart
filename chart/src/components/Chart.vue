@@ -1,45 +1,56 @@
 <template>
     <div>
         <a-input type="file" @change="handleChange"></a-input>
+        <a-button type="primary" @click="reset">Reset Zoom</a-button>
         <div class="chart-wrapper">
+            <ve-line
+                v-if="fileDataLoaded"
+                :data="chartData"
+                :data-zoom="dataZoom"
+            />
+            <!--
             <LineChart 
                 v-if="fileDataLoaded"
                 :chartData="chartData" 
                 :options="options" />
+            -->
         </div>
     </div>
 </template>
 
 <script>
-import LineChart from './LineChart.vue'
-
 export default {
     name: 'Chart',
-    components: {
-        LineChart
-    },
     data() {
         return {
             chartData: {},      // 用于存储图表的数据
             fileDataLoaded: false,  // 用于标记文件读取是否完成
-            options: {      // 图表的配置选项
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    zoom: {
-                        zoom: {
-                            enabled: true,      // 开启缩放功能
-                            drag: false,         // 设定是否开启拖动缩放
-                            mode: 'xy',         // xy轴均可缩放
-                            speed: 0.1,
-                        },
-                        pan: {
-                            enabled: true,      // 开启平移功能
-                            mode: 'xy',         // xy轴均可平移
-                        }
-                    }
+            dataZoom: [
+                {
+                    type: 'slider',
+                    xAxisIndex: 0,
+                    start: 0,
+                    end: 20
+                },
+                {
+                    type: 'inside',
+                    xAxisIndex: 0,
+                    start: 0,
+                    end: 20
+                },
+                {
+                    type: 'slider',
+                    yAxisIndex: 0,
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    yAxisIndex: 0,
+                    start: 0,
+                    end: 100
                 }
-            },
+            ]
         }
     },
     mounted() {
@@ -73,24 +84,20 @@ export default {
             console.log(arrayBuffer);
             const length = Math.floor(arrayBuffer.byteLength / 2);
             const int16Array = new Int16Array(arrayBuffer, 0, length);
-            let _labels = [];
-            let _dataset = {
-                label: 'File Data',
-                data: [],
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }
+            let _columns = ['x', 'y'];
+            let _rows = [];
             int16Array.forEach((value, index) => {
-                _labels.push(index);
-                _dataset.data.push(value);
+                _rows.push({'x': index, 'y': value});
             });
             this.chartData = {
-                labels: _labels,
-                datasets: [_dataset]
+                columns: _columns,
+                rows: _rows
             }
             this.fileDataLoaded = true;
         },
+        reset() {
+            
+        }
     }
 }
 </script>
