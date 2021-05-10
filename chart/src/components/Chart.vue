@@ -73,6 +73,7 @@ export default {
         readFile(file) {
             const fileReader = new FileReader();
             fileReader.readAsArrayBuffer(file);
+            // 读取完成后，将ArrayBuffer传入fillData()函数
             fileReader.onloadend = (ev) => {
                 console.log(ev);
                 const arrayBuffer = ev.target.result;
@@ -85,9 +86,9 @@ export default {
         fillData(arrayBuffer) {
             console.log(arrayBuffer);
             const length = Math.floor(arrayBuffer.byteLength / 2);
-            const int16Array = new Int16Array(arrayBuffer, 0, length);
-            let _columns = ['x', 'y'];
-            let _rows = [];
+            const int16Array = new Int16Array(arrayBuffer, 0, length);  // 将ArrayBuffer转为16位整型数组
+            let _columns = ['x', 'y'];      // 定义数据列
+            let _rows = [];     // 用于填充数据
             int16Array.forEach((value, index) => {
                 _rows.push({'x': index, 'y': value});
             });
@@ -95,7 +96,7 @@ export default {
                 columns: _columns,
                 rows: _rows
             }
-            this.fileDataLoaded = true;
+            this.fileDataLoaded = true;     // 标记读取完成，让图表显示
         },
         /**
          * 处理对微分按钮的点击事件
@@ -107,7 +108,7 @@ export default {
                 columns: _columns,
                 rows: _rows
             };
-            this.processed = true;
+            this.processed = true;      // 标记处理完成，使图表显示
         },
         /**
          * 处理对积分按钮的点击事件
