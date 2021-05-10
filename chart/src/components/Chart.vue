@@ -1,50 +1,55 @@
 <template>
     <div>
-        <a-input type="file" @change="handleChange"></a-input>
-        <a-button type="primary" @click="reset">Reset Zoom</a-button>
-        <div class="chart-wrapper">
-            <ve-line
-                v-if="fileDataLoaded"
-                :data="chartData"
-                :data-zoom="dataZoom"
-            />
-            <!--
-            <LineChart 
-                v-if="fileDataLoaded"
-                :chartData="chartData" 
-                :options="options" />
-            -->
-        </div>
+        <input type="file" @change="handleChange" />
+        <button type="primary" @click="handleDifferential">微分</button>
+        <button type="primary" @click="handleIntegral">积分</button>
+        <ve-line
+            v-if="fileDataLoaded"
+            :data="chartData"
+            :data-zoom="dataZoom"
+            height="300px"
+        />
+        <ve-line
+            v-if="processed"
+            :data="processedData"
+            :data-zoom="dataZoom"
+            height="300px"
+        />
     </div>
 </template>
 
 <script>
+import { differential } from '../functions/differential'
+import { integral } from '../functions/integral'
+
 export default {
     name: 'Chart',
     data() {
         return {
             chartData: {},      // 用于存储图表的数据
+            processedData: {},  // 用于存储处理后的数据，作为第二图表的数据源
             fileDataLoaded: false,  // 用于标记文件读取是否完成
+            processed: false,       // 用于标记是否进行了数据处理（即是否需要显示第二个通道）
             dataZoom: [
-                {
+                {   // 开启x轴的滑动条缩放
                     type: 'slider',
                     xAxisIndex: 0,
                     start: 0,
                     end: 20
                 },
-                {
+                {   // 开启x轴的滚轮缩放
                     type: 'inside',
                     xAxisIndex: 0,
                     start: 0,
                     end: 20
                 },
-                {
+                {   // 开启y轴的滑动条缩放
                     type: 'slider',
                     yAxisIndex: 0,
                     start: 0,
                     end: 100
                 },
-                {
+                {   // 开启y轴的滚轮缩放
                     type: 'inside',
                     yAxisIndex: 0,
                     start: 0,
@@ -52,9 +57,6 @@ export default {
                 }
             ]
         }
-    },
-    mounted() {
-        // do nothing
     },
     methods: {
         /**
@@ -95,8 +97,29 @@ export default {
             }
             this.fileDataLoaded = true;
         },
-        reset() {
-            
+        /**
+         * 处理对微分按钮的点击事件
+         */
+        handleDifferential() {
+            const _columns = ['x', '微分'];
+            const _rows = differential(this.chartData.rows);
+            this.processedData = {
+                columns: _columns,
+                rows: _rows
+            };
+            this.processed = true;
+        },
+        /**
+         * 处理对积分按钮的点击事件
+         */
+        handleIntegral() {
+            const _columns = ['x', '积分'];
+            const _rows = integral(this.chartData.rows);
+            this.processedData = {
+                columns: _columns,
+                rows: _rows
+            };
+            this.processed = true;
         }
     }
 }
@@ -104,9 +127,8 @@ export default {
 
 <style scoped>
 
-.chart-wrapper {
-    width: 100%;
-    height: 100%;
+button {
+    margin-right: 30px;
 }
 
 </style>
