@@ -1,39 +1,28 @@
 package controllers;
 
-import constants.Constants;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.chart.Chart;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.gillius.jfxutils.chart.ChartZoomManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import process.DifferentialProcess;
 import process.IntegralProcess;
 import process.Process;
-import utils.AisleUtil;
 import utils.ChartUtil;
 import utils.FileUtil;
 
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
